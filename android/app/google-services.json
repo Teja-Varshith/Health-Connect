@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1012336958631",
+    "project_id": "health-connect-1171f",
+    "storage_bucket": "health-connect-1171f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012336958631:android:c723bb62f41813ad6f4f82",
+        "android_client_info": {
+          "package_name": "com.example.health_connect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYkt2zhSFWw8BSZ5j2mke9u-Qw1i2Byb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -102,6 +102,7 @@ class UserModel {
   final String name;
   final String email;
   final UserRole role;
+  final String? phoneNumber;
 
   final String? familyCode;
 
@@ -119,6 +120,7 @@ class UserModel {
     required this.name,
     required this.email,
     required this.role,
+    required this.phoneNumber,
     this.familyCode,
     this.caretakerId,
     this.age,
@@ -136,6 +138,7 @@ class UserModel {
       'name': name,
       'email': email,
       'role': role.value,
+      'phoneNumber': phoneNumber,
       if (familyCode != null) 'familyCode': familyCode,
       if (caretakerId != null) 'caretakerId': caretakerId,
       if (age != null) 'age': age,
@@ -151,6 +154,7 @@ class UserModel {
       uid: map['uid'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
+      phoneNumber: map['phoneNumber'] as String?,
       role: UserRoleX.fromString(map['role'] as String?),
       familyCode: map['familyCode'] as String?,
       caretakerId: map['caretakerId'] as String?,
@@ -179,6 +183,7 @@ class UserModel {
     String? name,
     String? email,
     UserRole? role,
+    String? phoneNumber,
     String? familyCode,
     String? caretakerId,
     int? age,
@@ -190,6 +195,7 @@ class UserModel {
     return UserModel(
       uid: uid ?? this.uid,
       name: name ?? this.name,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
       role: role ?? this.role,
       familyCode: familyCode ?? this.familyCode,

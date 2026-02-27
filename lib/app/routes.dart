@@ -6,6 +6,7 @@ import 'package:health_connect/features/auth/view/login_screen.dart';
 import 'package:health_connect/features/auth/view/member_signup_screen.dart';
 import 'package:health_connect/features/auth/view/profile_setup_screen.dart';
 import 'package:health_connect/features/auth/view/role_select_screen.dart';
+import 'package:health_connect/features/caretaker/view/caretaker_homescreen.dart';
 import 'package:routemaster/routemaster.dart';
 
 // Placeholder — replace when building dashboards
@@ -62,9 +63,8 @@ final profileSetupRoutes = RouteMap(
 final caretakerRoutes = RouteMap(
   routes: {
     '/': (_) => const Redirect('/caretaker/dashboard'),
-    '/caretaker/dashboard': (_) => const MaterialPage(
-      child: _PlaceholderScreen(title: 'Caretaker Dashboard'),
-    ),
+    '/caretaker/dashboard': (_) =>
+        const MaterialPage(child: CaretakerHomeScreen()),
   },
 );
 

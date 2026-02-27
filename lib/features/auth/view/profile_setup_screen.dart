@@ -14,6 +14,7 @@ class ProfileSetupScreen extends ConsumerStatefulWidget {
 class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _pageController = PageController();
+  final _phoneController = TextEditingController();
   final _ageController = TextEditingController();
 
   int _currentPage = 0;
@@ -21,6 +22,12 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   BloodGroup? _selectedBloodGroup;
 
   late final List<_ProfilePage> _pages = [
+    _ProfilePage(
+      title: 'Your phone number',
+      subtitle: 'For emergency contact and family coordination.',
+      icon: Icons.phone_outlined,
+      builder: _buildPhonePage,
+    ),
     _ProfilePage(
       title: 'How old are you?',
       subtitle: 'Used to calculate your personalised health risk score.',
@@ -44,6 +51,7 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   @override
   void dispose() {
     _pageController.dispose();
+    _phoneController.dispose();
     _ageController.dispose();
     super.dispose();
   }
@@ -66,14 +74,17 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   bool _validateCurrentPage() {
     switch (_currentPage) {
       case 0:
-        return _formKey.currentState!.validate();
+        // Phone number is optional — always passes
+        return true;
       case 1:
+        return _formKey.currentState!.validate();
+      case 2:
         if (_selectedGender == null) {
           _showHint('Please select your gender');
           return false;
         }
         return true;
-      case 2:
+      case 3:
         if (_selectedBloodGroup == null) {
           _showHint('Please select your blood group');
           return false;
@@ -93,6 +104,9 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
           age: int.parse(_ageController.text.trim()),
           gender: _selectedGender!,
           bloodGroup: _selectedBloodGroup!,
+          phoneNumber: _phoneController.text.trim().isEmpty
+              ? null
+              : _phoneController.text.trim(),
         );
   }
 
@@ -288,7 +302,57 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
     );
   }
 
-  // ── Age ──────────────────────────────────────────────────────────────────
+  // ── Phone ─────────────────────────────────────────────────────────────────
+
+  Widget _buildPhonePage() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          controller: _phoneController,
+          keyboardType: TextInputType.phone,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9+\- ]')),
+          ],
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          decoration: InputDecoration(
+            hintText: 'e.g. +91 98765 43210',
+            hintStyle: TextStyle(color: Colors.grey.shade400),
+            filled: true,
+            fillColor: Colors.grey.shade50,
+            prefixIcon: const Icon(
+              Icons.phone_outlined,
+              color: Color(0xFF00897B),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 18,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide(color: Colors.grey.shade200),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide(color: Colors.grey.shade200),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(
+                color: Color(0xFF00897B),
+                width: 1.5,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'Optional — you can skip this step.',
+          style: TextStyle(fontSize: 12, color: Colors.grey.shade400),
+        ),
+      ],
+    );
+  }
 
   Widget _buildAgePage() {
     return TextFormField(

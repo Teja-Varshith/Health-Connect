@@ -6,10 +6,19 @@ import 'package:health_connect/app/theme.dart';
 import 'package:health_connect/firebase_options.dart';
 import 'package:health_connect/providers/user_provider.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // TODO: Replace with your Supabase project URL and anon key
+  await Supabase.initialize(
+    url: 'https://gcgmapbczlophcztzcvj.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjZ21hcGJjemxvcGhjenR6Y3ZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE2OTI0MDEsImV4cCI6MjA0NzI2ODQwMX0.FzDN31kSqG6GR_k8jjWKX01WIcTJyDjQfcLIU3KRsFk',
+  );
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

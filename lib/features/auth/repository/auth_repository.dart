@@ -98,6 +98,7 @@ class AuthRepository {
         uid: uid,
         name: name,
         email: email,
+        phoneNumber: null,
         role: UserRole.caretaker,
         familyCode: code,
       );
@@ -106,6 +107,7 @@ class AuthRepository {
         uid: uid,
         name: name,
         email: email,
+        phoneNumber: null,
         role: UserRole.familyMember,
         familyCode: familyCode,
         caretakerId: caretakerDoc!.id,
@@ -167,16 +169,22 @@ class AuthRepository {
     required int age,
     required Gender gender,
     required BloodGroup bloodGroup,
+    String? phoneNumber,
   }) async {
-    final updates = {
+    final updates = <String, dynamic>{
       'age': age,
       'gender': gender.value,
       'bloodGroup': bloodGroup.value,
       'isProfileComplete': true,
+      if (phoneNumber != null && phoneNumber.isNotEmpty)
+        'phoneNumber': phoneNumber,
     };
+    return updateUser(uid, updates);
+  }
 
+  /// Update any user field.
+  Future<UserModel> updateUser(String uid, Map<String, dynamic> updates) async {
     await _users.doc(uid).update(updates);
-
     final doc = await _users.doc(uid).get();
     return UserModel.fromDocument(doc);
   }

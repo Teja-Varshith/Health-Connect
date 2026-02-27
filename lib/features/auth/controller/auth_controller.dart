@@ -137,6 +137,7 @@ class AuthController extends StateNotifier<bool> {
     required int age,
     required Gender gender,
     required BloodGroup bloodGroup,
+    String? phoneNumber,
   }) async {
     state = true;
     try {
@@ -146,6 +147,7 @@ class AuthController extends StateNotifier<bool> {
         age: age,
         gender: gender,
         bloodGroup: bloodGroup,
+        phoneNumber: phoneNumber,
       );
 
       // Update userProvider → main.dart reactively switches to dashboard routes
